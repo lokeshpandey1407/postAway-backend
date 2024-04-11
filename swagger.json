@@ -1,0 +1,702 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "description": "Social media application backend",
+    "title": "PostAway"
+  },
+  "servers": [{ "url": "http://localhost:3200" }],
+  "components": {
+    "securitySchemes": {
+      "JWT": { "in": "cookie", "name": "Authorization", "type": "apiKey" }
+    }
+  },
+
+  "paths": {
+    "/api/user/signin": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login credentials for user",
+        "description": "Get api token ",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Invalid Credentials"
+          }
+        }
+      }
+    },
+    "/api/user/signup": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Create a user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "gender": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "role": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/all": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "Users list"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Get a user by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/logout": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Logout",
+        "responses": {
+          "200": {
+            "description": "Users list"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/otp/send": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Send otp to registered user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/otp/resetPassword": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Reset password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "newPassword": { "type": "string" },
+                  "otp": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/posts": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get all posts",
+        "responses": {
+          "200": {
+            "description": "Posts list"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/user-posts/{userId}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get posts by user id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's posts"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/user/{postId}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Get posts by post id",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID of the post to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/posts/": {
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Create a post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "imageUrl": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post created successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/posts/{postId}": {
+      "put": {
+        "tags": ["Posts"],
+        "summary": "Update a post",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID of the post to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "imageUrl": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post updated successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Posts"],
+        "summary": "Delete a post",
+        "responses": {
+          "200": {
+            "description": "Post updated successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/likes/{id}": {
+      "post": {
+        "tags": ["Likes"],
+        "summary": "Like a post",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post liked successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Likes"],
+        "summary": "Remove a like",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the like to remove",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like removed successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/comment/{postId}": {
+      "get": {
+        "tags": ["Comment"],
+        "summary": "Get all comments of a post",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "ID of the post to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comments list"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Comment"],
+        "summary": "Post a comment",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "description": "Post Id to be retrieved",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post comment on a post"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/comment/{commentId}": {
+      "delete": {
+        "tags": ["Comment"],
+        "summary": "Delete a comment",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "ID of the comment to deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "comment deleted successfully"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Comment"],
+        "summary": "Update a comment",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "CommentId to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comment updated"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/profile/get-all-details": {
+      "get": {
+        "tags": ["User Profile"],
+        "summary": "Get all Profiles",
+        "responses": {
+          "200": {
+            "description": "User profile list"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/profile/get-details/{profileId}": {
+      "get": {
+        "tags": ["User Profile"],
+        "summary": "Get a Profile",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "ID of the user profile",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a User profile"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+    "/api/profile/update-details/{profileId}": {
+      "post": {
+        "tags": ["User Profile"],
+        "summary": "Update a Profile",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "ID of the user profile to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "gender": { "type": "string" },
+                  "mobile": { "type": "number" },
+                  "bio": { "type": "string" },
+                  "avatarUrl": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "update a User profile"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+
+    "/api/friends/send-friend-request/{id}": {
+      "post": {
+        "tags": ["Friends"],
+        "summary": "Send a friend request",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Sender Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "receiverId": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Friend request sent"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+
+    "/api/friends/accept-friend-request/{id}": {
+      "post": {
+        "tags": ["Friends"],
+        "summary": "Accept a friend request",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Friend Request Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Request status value options are - accepted or rejected",
+                "properties": {
+                  "requestStatus": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Friend request sent"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+
+    "/api/friends/{profileId}": {
+      "get": {
+        "tags": ["Friends"],
+        "summary": "Get all friends",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "User profile id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get all friends"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    },
+
+    "/api/pending/{senderId}": {
+      "get": {
+        "tags": ["Friends"],
+        "summary": "Get pending friend request of a user",
+        "parameters": [
+          {
+            "name": "senderId",
+            "in": "path",
+            "description": "User profile id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get pending requests of a user"
+          },
+          "500": {
+            "description": "Something went wrong"
+          }
+        }
+      }
+    }
+  }
+}
